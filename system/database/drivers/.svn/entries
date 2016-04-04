@@ -1,0 +1,92 @@
+10
+
+dir
+214
+https://subversion.assembla.com/svn/xandershop/trunk/system/database/drivers
+https://subversion.assembla.com/svn/xandershop
+
+
+
+2014-12-10T17:01:56.983840Z
+22
+argo_uchiha
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+96f17199-8953-4c75-9052-05f04a373073
+
+mssql
+dir
+
+sqlite
+dir
+
+oci8
+dir
+
+pdo
+dir
+
+postgre
+dir
+
+mysql
+dir
+
+odbc
+dir
+
+cubrid
+dir
+
+sqlsrv
+dir
+
+index.html
+file
+
+
+
+
+2015-01-11T15:19:16.278771Z
+0227cfd904e99656279202032b98d4a7
+2014-12-07T13:53:17.226928Z
+11
+orangewater.c1000
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+114
+
+mysqli
+dir
+

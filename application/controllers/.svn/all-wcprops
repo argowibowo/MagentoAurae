@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/xandershop/!svn/ver/214/trunk/application/controllers
+END
+welcome.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/xandershop/!svn/ver/22/trunk/application/controllers/welcome.php
+END
+verifylogin.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/xandershop/!svn/ver/191/trunk/application/controllers/verifylogin.php
+END
+add_pesanan.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/xandershop/!svn/ver/184/trunk/application/controllers/add_pesanan.php
+END
+catalog_publish_po.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/xandershop/!svn/ver/185/trunk/application/controllers/catalog_publish_po.php
+END
+profile.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/xandershop/!svn/ver/214/trunk/application/controllers/profile.php
+END
+catalog_unpublish_po.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/xandershop/!svn/ver/186/trunk/application/controllers/catalog_unpublish_po.php
+END
+customer.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/xandershop/!svn/ver/210/trunk/application/controllers/customer.php
+END
+nota.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/xandershop/!svn/ver/30/trunk/application/controllers/nota.php
+END
+catalog_publish_rs.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/xandershop/!svn/ver/186/trunk/application/controllers/catalog_publish_rs.php
+END
+catalog_unpublish_rs.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/xandershop/!svn/ver/186/trunk/application/controllers/catalog_unpublish_rs.php
+END
+login.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/xandershop/!svn/ver/68/trunk/application/controllers/login.php
+END
+nota_dropship.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/xandershop/!svn/ver/33/trunk/application/controllers/nota_dropship.php
+END
+pesanan_belumlunas.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/xandershop/!svn/ver/203/trunk/application/controllers/pesanan_belumlunas.php
+END
+pesanan_all.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/xandershop/!svn/ver/208/trunk/application/controllers/pesanan_all.php
+END
+category.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/xandershop/!svn/ver/150/trunk/application/controllers/category.php
+END
+stock.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/xandershop/!svn/ver/109/trunk/application/controllers/stock.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/xandershop/!svn/ver/11/trunk/application/controllers/index.html
+END
+pesanan_lunas.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/xandershop/!svn/ver/203/trunk/application/controllers/pesanan_lunas.php
+END
+home.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/xandershop/!svn/ver/211/trunk/application/controllers/home.php
+END
+confirmation.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/xandershop/!svn/ver/203/trunk/application/controllers/confirmation.php
+END

@@ -1,0 +1,103 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+session_start(); //we need to call PHP's session object to access it through CI
+class Customer extends CI_Controller {
+
+ function __construct()
+ {
+   parent::__construct();
+   $this->load->database();
+   $this->load->helper('url');
+   $this->load->library('grocery_CRUD');
+   $this->load->library('gc_dependent_select');
+   $this->load->model('customer_model');
+ }
+
+ function index()
+ {
+   if($this->session->userdata('logged_in'))
+   {
+     $session_data = $this->session->userdata('logged_in');
+     $data['username'] = $session_data['username'];
+
+     $crud = new grocery_CRUD();
+     $crud->set_theme('datatables');
+//      $crud->where('REC_STATUS','A');
+     $crud->where('STATUS !=','S');
+     $crud->set_table('ms_customer');
+     $crud->columns('ID','NAMA','EMAIL','STATUS');
+
+     $crud->display_as('ID','Customer ID');
+     $crud->display_as('NAMA','Nama');
+     $crud->display_as('EMAIL','Email');
+     $crud->display_as('ALAMAT','Alamat');
+     $crud->display_as('PROVINSI','Provinsi');
+     $crud->display_as('KOTA','Kota');
+     $crud->display_as('KODE_POS','Kode Pos');
+     $crud->display_as('PHONE','Phone');
+     $crud->display_as('STATUS','Status');
+
+     $crud->set_subject('Customer');
+
+     $crud->field_type('STATUS','dropdown',array('M' => 'Moderate', 'A' => 'Active','N' => 'Inactive'));
+
+     $crud->fields('NAMA','EMAIL','ALAMAT','PROVINSI','KOTA','KODE_POS','PHONE','STATUS','REC_STATUS');
+
+     if ($crud->getState() == 'edit' || $crud->getState() || $crud->getState() == 'list') {
+     	$crud->field_type('REC_STATUS', 'hidden');
+     }
+
+     $crud->unique_fields('EMAIL');
+     $crud->unset_texteditor('ALAMAT','full_text');
+     $crud->change_field_type('ALAMAT', 'text');
+
+     //$crud->add_action('PRINT DATA EKSPEDISI', '', 'home/view_dropship','ui-icon-search');
+     $crud->add_action('Delete', '', 'customer/update_status_del','ui-icon-circle-minus');
+     $crud->unset_delete();
+     $crud->unset_read();
+
+     // buat test
+     $crud->set_relation('PROVINSI', 'ms_lokasi', 'lokasi_nama',array('lokasi_kabupatenkota' => '00','lokasi_kecamatan' => '00','lokasi_kelurahan' => '0000'));
+     $crud->set_relation('KOTA', 'ms_lokasi', 'lokasi_nama', array('lokasi_kabupatenkota <>' => '00','lokasi_kecamatan' => '00','lokasi_kelurahan' => '00'));
+     // buat test
+     $crud->callback_before_insert(array($this,'doBeforeInsert'));
+     $crud->required_fields('NAMA','EMAIL','PASSWORD','ALAMAT','PROVINSI','KOTA','KODE_POS','PHONE','STATUS');
+     $data = $crud->render();
+
+     $data->menu = 'customer';
+
+     $this->load->view('header2', $data);
+     $this->load->view('header_menu2', $data);
+     $this->load->view('customer_view', $data);
+     $this->load->view('footer', $data);
+   }
+   else {
+     //If no session, redirect to login page
+     redirect('login', 'refresh');
+   }
+ }
+
+ function doBeforeInsert($post_array){
+ 	$post_array['STATUS'] = 'A';
+ 	$post_array['REC_STATUS'] = 'A';
+ 	return $post_array;
+ }
+
+ function update_status_del($id){
+   $dataArr = array("status" => 'N');
+   $this->customer_model->updateStatusDelete($dataArr, $id);
+   redirect("customer");
+ }
+
+//  function doInsertVariant(){
+//  	$select = "";
+
+//  	$select = "<div class='form-input-box'><select class='chosen-select' data-placeholder='Select Test'>><option value=''  ></option>";
+// 	foreach ( 	$this->customer_model->getProvinsi() as $provinsi){
+// 		$select .= "<option value=".$provinsi->lokasi_nama.">".$provinsi->lokasi_nama."</option>";
+// 	}
+// 	$select .= "</select><div class='clear'></div></div>";
+//  	return $select;
+//  }
+}
+
+?>

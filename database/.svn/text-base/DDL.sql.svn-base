@@ -1,0 +1,199 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `mydb` ;
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`MS_CATEGORY`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`MS_CATEGORY` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`MS_CATEGORY` (
+  `ID_CATEGORY` INT NOT NULL AUTO_INCREMENT,
+  `TIPE` VARCHAR(30) NULL,
+  `NAMA` VARCHAR(50) NULL,
+  `REC_STATUS` VARCHAR(1) NULL,
+  PRIMARY KEY (`ID_CATEGORY`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`MS_CUSTOMER`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`MS_CUSTOMER` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`MS_CUSTOMER` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `NAMA` VARCHAR(30) NULL,
+  `EMAIL` VARCHAR(50) NULL,
+  `STATUS` VARCHAR(1) NULL,
+  `PASSWORD` VARCHAR(255) NULL,
+  `ALAMAT` VARCHAR(50) NULL,
+  `PROVINSI` VARCHAR(45) NULL,
+  `KOTA` VARCHAR(45) NULL,
+  `KODE_POS` VARCHAR(10) NULL,
+  `PHONE` VARCHAR(18) NULL,
+  `REC_STATUS` VARCHAR(1) NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`MS_ITEM`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`MS_ITEM` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`MS_ITEM` (
+  `ID_ITEM` INT NOT NULL AUTO_INCREMENT,
+  `ID_CATEGORY` INT NULL,
+  `NAMA_ITEM` VARCHAR(165) NULL,
+  `HARGA_AWAL` DOUBLE NULL,
+  `HARGA_JUAL` DOUBLE NULL,
+  `BERAT` DOUBLE NULL,
+  `KETERANGAN` VARCHAR(50) NULL,
+  `MIN_ORDER` INT NULL,
+  `FOTO` VARCHAR(45) NULL,
+  `REC_STATUS_ITEM` VARCHAR(1) NULL,
+  `PUBLISH_STATUS` VARCHAR(1) NULL,
+  PRIMARY KEY (`ID_ITEM`),
+  INDEX `FK_ID_CATEGORY_idx` (`ID_CATEGORY` ASC),
+  CONSTRAINT `FK_ID_CATEGORY`
+    FOREIGN KEY (`ID_CATEGORY`)
+    REFERENCES `mydb`.`MS_CATEGORY` (`ID_CATEGORY`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`LG_NOTA`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`LG_NOTA` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`LG_NOTA` (
+  `ID_NOTA` INT NOT NULL AUTO_INCREMENT,
+  `ID_CUSTOMER` INT NULL,
+  `TANGGAL` DATE NULL,
+  `DUE_DATE` DATE NULL,
+  `SHIPPING_FEE` DOUBLE NULL,
+  `SHIPPING_WIGHT` DOUBLE NULL,
+  `SHIPPING_TO` VARCHAR(45) NULL,
+  `SHIPPING_FROM` VARCHAR(45) NULL,
+  `ID_PROVINSI` VARCHAR(45) NULL,
+  `ID_KOTA` VARCHAR(45) NULL,
+  `TOTAL` DOUBLE NULL,
+  `STATUS` VARCHAR(1) NULL,
+  `DROPSHIP` VARCHAR(1) NULL,
+  `TIPE` VARCHAR(1) NULL,
+  PRIMARY KEY (`ID_NOTA`),
+  INDEX `FK_ID_CUST_NOTA_idx` (`ID_CUSTOMER` ASC),
+  CONSTRAINT `FK_ID_CUST_NOTA`
+    FOREIGN KEY (`ID_CUSTOMER`)
+    REFERENCES `mydb`.`MS_CUSTOMER` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`LG_KONFIRMASI`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`LG_KONFIRMASI` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`LG_KONFIRMASI` (
+  `ID_KONFIRMASI` INT NOT NULL AUTO_INCREMENT,
+  `ID_CUSTOMER` INT NULL,
+  `ID_NOTA` INT NULL,
+  `TANGGAL` DATE NULL,
+  `NAMA` VARCHAR(45) NULL,
+  `JUMLAH` DOUBLE NULL,
+  `BANK` VARCHAR(45) NULL,
+  `REKENING` VARCHAR(45) NULL,
+  `STATUS` VARCHAR(1) NULL,
+  PRIMARY KEY (`ID_KONFIRMASI`),
+  INDEX `FK_ID_CUSTOMER_idx` (`ID_CUSTOMER` ASC),
+  INDEX `FK_ID_NOTA_K_idx` (`ID_NOTA` ASC),
+  CONSTRAINT `FK_ID_CUSTOMER`
+    FOREIGN KEY (`ID_CUSTOMER`)
+    REFERENCES `mydb`.`MS_CUSTOMER` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_ID_NOTA_K`
+    FOREIGN KEY (`ID_NOTA`)
+    REFERENCES `mydb`.`LG_NOTA` (`ID_NOTA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`MS_STOCK`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`MS_STOCK` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`MS_STOCK` (
+  `ID_STOK` INT NOT NULL AUTO_INCREMENT,
+  `ID_ITEM` INT NULL,
+  `WARNA` VARCHAR(20) NULL,
+  `STOCK` INT NULL,
+  PRIMARY KEY (`ID_STOK`),
+  INDEX `FK_ID_ITEM_idx` (`ID_ITEM` ASC),
+  CONSTRAINT `FK_ID_ITEM`
+    FOREIGN KEY (`ID_ITEM`)
+    REFERENCES `mydb`.`MS_ITEM` (`ID_ITEM`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`LG_NOTA_DETAIL`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`LG_NOTA_DETAIL` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`LG_NOTA_DETAIL` (
+  `ID_NOTA` INT NOT NULL,
+  `ID_PRODUCT` INT NOT NULL,
+  `STOCK` INT NULL,
+  `SUBTOTAL` DOUBLE NULL,
+  PRIMARY KEY (`ID_NOTA`, `ID_PRODUCT`),
+  INDEX `FK_ID_PRODUCT_idx` (`ID_PRODUCT` ASC),
+  CONSTRAINT `FK_ID_NOTA`
+    FOREIGN KEY (`ID_NOTA`)
+    REFERENCES `mydb`.`LG_NOTA` (`ID_NOTA`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_ID_PRODUCT`
+    FOREIGN KEY (`ID_PRODUCT`)
+    REFERENCES `mydb`.`MS_STOCK` (`ID_STOK`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`category`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`category` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`category` (
+  `category_id` INT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`category_id`));
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
